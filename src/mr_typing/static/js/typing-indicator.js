@@ -95,7 +95,7 @@ window.registerCommandHandler('say', (data) => {
   switch(data.event) {
     case 'partial':
       // For partial updates, just show the typing indicator
-      return html`<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
+      return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
     
     case 'running':
       // In the running stage, show the text
@@ -112,7 +112,7 @@ window.registerCommandHandler('say', (data) => {
       }
       
       // No markdown parsing, just show the raw text
-      return html`<typing-indicator agent-name="${data.persona || 'Assistant'}" text="${text}"></typing-indicator>`;
+      return `<typing-indicator agent-name="${data.persona || 'Assistant'}" text="${text}"></typing-indicator>`;
     
     case 'result':
       // Don't do anything in the final stage
