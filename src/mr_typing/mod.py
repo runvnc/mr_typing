@@ -19,11 +19,11 @@ async def say(text, context=None):
     # that are longer
     wait_type = random.randint(0, 10)
     if wait_type < 3:
-        wait_time = random.randint(1, 4)
+        wait_time = random.randint(2, 8)
     elif wait_type < 9:
-        wait_time = random.randint(1, 3)
+        wait_time = random.randint(2, 6)
     else:
-        wait_time = random.randint(5, 25)
+        wait_time = random.randint(7, 35)
 
     await asyncio.sleep(wait_time)
     return text
