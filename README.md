@@ -34,6 +34,10 @@ Once installed, the plugin overrides the standard `say` command to show a typing
 
 After installation, you need to enable the command for your agents in the admin interface. Since this plugin overrides the default `say` command, make sure to disable any other plugins that might also override it.
 
+## Note on Static Assets
+
+The plugin's static assets are served from `/mr_typing/static/` rather than the typical `/static/plugins/mr_typing/` path mentioned in the documentation.
+
 ## Customization
 
 The typing indicator appearance can be customized by modifying the CSS in the `typing-indicator.js` file.
