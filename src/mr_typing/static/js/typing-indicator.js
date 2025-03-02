@@ -105,8 +105,8 @@ window.registerCommandHandler('say', async (data) => {
       return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
     
     case 'running':
-      let min_wait = Math.random() * 4000;
-      let wait_time = Math.round(Math.random() * 30000 + data.args.text.length*10.2);
+      let min_wait = Math.random() * 7000;
+      let wait_time = Math.round(Math.random() * 40000 + data.args.text.length*30.2);
       await delay(wait_time);
       return data.args.text
     
