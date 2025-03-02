@@ -107,7 +107,10 @@ window.registerCommandHandler('say', async (data) => {
     case 'partial':
      if (!isTyping) {
         isTyping = true;
+        // print with blue bckground yellow text
+        console.log('%c waiting before showing typing indicator', 'background: blue; color: yellow')
         await delay(wait_time);
+        console.log('%c showing typing indicator', 'background: blue; color: yellow"')
         return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
       } else {
         return null;
