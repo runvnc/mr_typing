@@ -5,9 +5,7 @@ import { unsafeHTML } from '/chat/static/js/lit-html/directives/unsafe-html.js';
 class TypingIndicator extends BaseEl {
   static properties = {
     agentName: { type: String, attribute: 'agent-name' },
-    isTyping: { type: Boolean, attribute: 'is-typing' },
-    finalText: { type: String, attribute: 'final-text' },
-    showFinal: { type: Boolean, attribute: 'show-final' }
+    text: { type: String, attribute: 'text' }
   };
 
   static styles = css`
@@ -61,25 +59,16 @@ class TypingIndicator extends BaseEl {
       }
     }
     
-    .final-text {
-      display: none;
-    }
-    
-    :host([show-final]) .typing-indicator {
-      display: none;
-    }
-    
-    :host([show-final]) .final-text {
-      display: block;
+    .message-text {
+      margin-top: 0.5rem;
+      white-space: pre-wrap;
     }
   `;
 
   constructor() {
     super();
     this.agentName = 'Assistant';
-    this.isTyping = true;
-    this.finalText = '';
-    this.showFinal = false;
+    this.text = '';
   }
 
   _render() {
@@ -92,9 +81,7 @@ class TypingIndicator extends BaseEl {
           <div class="dot"></div>
         </div>
       </div>
-      <div class="final-text">
-        <slot></slot>
-      </div>
+      ${this.text ? html`<div class="message-text">${this.text}</div>` : ''}
     `;
   }
 }
@@ -108,17 +95,10 @@ window.registerCommandHandler('say', (data) => {
   switch(data.event) {
     case 'partial':
       // For partial updates, just show the typing indicator
-      // This is the stage where text is streaming in
       return html`<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
     
     case 'running':
-      // This is the stage where the command is being executed
-      // Still just show the typing indicator
-      return html`<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
-    
-    case 'result':
-      // This is the final stage where we show the complete message
-      // Extract the text from the data
+      // In the running stage, show the text
       let text = '';
       
       if (data.params?.text) {
@@ -131,18 +111,12 @@ window.registerCommandHandler('say', (data) => {
         text = typeof data.args === 'string' ? data.args : JSON.stringify(data.args);
       }
       
-      // Parse the text as markdown if possible
-      let parsedText = '';
-      try {
-        parsedText = window.markdownRenderer.parse(text);
-      } catch (e) {
-        console.error('Error parsing markdown:', e);
-        parsedText = `<pre>${text}</pre>`;
-      }
-      
-      // Show the final message with the typing indicator hidden
-      return html`<typing-indicator agent-name="${data.persona || 'Assistant'}" show-final>
-        ${unsafeHTML(parsedText)}
-      </typing-indicator>`;
+      // No markdown parsing, just show the raw text
+      return html`<typing-indicator agent-name="${data.persona || 'Assistant'}" text="${text}"></typing-indicator>`;
+    
+    case 'result':
+      // Don't do anything in the final stage
+      // The running stage already showed the text
+      return null;
   }
 });
