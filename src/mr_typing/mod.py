@@ -1,4 +1,8 @@
 from lib.providers.commands import command
+import asyncio
+import random
+
+random.seed()
 
 @command()
 async def say(text, context=None):
@@ -10,6 +14,7 @@ async def say(text, context=None):
     
     Return: No return value.
     """
-    # This command works the same as the regular say command
-    # The difference is in the frontend implementation
+    # create a random delay to simulate a human response
+    wait_time = random.randint(1, 5)
+    await asyncio.sleep(wait_time)
     return text
