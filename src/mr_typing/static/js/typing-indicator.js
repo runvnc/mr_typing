@@ -2,6 +2,11 @@ import { BaseEl } from '/chat/static/js/base.js';
 import { html, css } from '/chat/static/js/lit-core.min.js';
 import { unsafeHTML } from '/chat/static/js/lit-html/directives/unsafe-html.js';
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 class TypingIndicator extends BaseEl {
   static properties = {
     agentName: { type: String, attribute: 'agent-name' },
@@ -100,8 +105,8 @@ window.registerCommandHandler('say', (data) => {
       return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
     
     case 'running':
-      // In the running stage, show the text
       let wait_time = Math.round(Math.random() * 10000 + data.args.text.length*1.2);
+      await delay(wait_time);
       return data.args.text
     
     case 'result':
