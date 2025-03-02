@@ -96,6 +96,7 @@ class TypingIndicator extends BaseEl {
 customElements.define('typing-indicator', TypingIndicator);
 
 let isTyping = false;
+let startTypingPromise = null;
 
 // Register the command handler for say
 window.registerCommandHandler('say', async (data) => {
@@ -109,10 +110,12 @@ window.registerCommandHandler('say', async (data) => {
         isTyping = true;
         // print with blue bckground yellow text
         console.log('%c waiting before showing typing indicator', 'background: blue; color: yellow')
-        await delay(wait_time);
+        startTypingPromise = delay(wait_time);
+        await startTypingPromise
         console.log('%c showing typing indicator', 'background: blue; color: yellow"')
         return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
       } else {
+        await startTypingPromise;
         return null;
       }
     
