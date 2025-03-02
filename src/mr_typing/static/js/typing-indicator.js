@@ -95,6 +95,8 @@ class TypingIndicator extends BaseEl {
 
 customElements.define('typing-indicator', TypingIndicator);
 
+let isTyping = false;
+
 // Register the command handler for say
 window.registerCommandHandler('say', async (data) => {
   console.log('Handling say command with typing indicator:', data);
@@ -103,15 +105,21 @@ window.registerCommandHandler('say', async (data) => {
    
   switch(data.event) {
     case 'partial':
-     await delay(wait_time);
-      // For partial updates, just show the typing indicator
-      return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
+     if (!isTyping) {
+        isTyping = true;
+       await delay(wait_time);
+        return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
+      } else {
+        return null;
+      }}
     
     case 'running':
+     isTyping = false
       await delay(wait_time);
       return data.args.text
     
     case 'result':
+      isTyping = false;
       // Don't do anything in the final stage
       // The running stage already showed the text
       return null;
