@@ -101,21 +101,7 @@ window.registerCommandHandler('say', (data) => {
     
     case 'running':
       // In the running stage, show the text
-      let text = '';
-      
-      if (data.params?.text) {
-        text = data.params.text;
-      } else if (data.params?.markdown) {
-        text = data.params.markdown;
-      } else if (typeof data.params === 'string') {
-        text = data.params;
-      } else if (data.args) {
-        text = typeof data.args === 'string' ? data.args : JSON.stringify(data.args);
-      }
-      
-      // No markdown parsing, just show the raw text
-      return text
-      //return `<typing-indicator agent-name="${data.persona || 'Assistant'}" text="${text}"></typing-indicator>`;
+      return data.args.text
     
     case 'result':
       // Don't do anything in the final stage
