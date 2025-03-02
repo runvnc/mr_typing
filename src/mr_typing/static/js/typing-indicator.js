@@ -114,7 +114,7 @@ window.registerCommandHandler('say', async (data) => {
       }
     
     case 'running':
-     isTyping = false
+      isTyping = false
       await delay(wait_time);
       return data.args.text
     
