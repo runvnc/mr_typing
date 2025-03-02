@@ -116,8 +116,29 @@ window.registerCommandHandler('say', (data) => {
     
     case 'result':
       // When we get the final result, show the complete message
-      const text = data.params.text || data.args;
-      const parsedText = window.markdownRenderer.parse(text);
+      // Handle different data structures safely
+      let text = '';
+      
+      // Try to extract text from various possible locations
+      if (data.params?.text) {
+        text = data.params.text;
+      } else if (data.params?.markdown) {
+        text = data.params.markdown;
+      } else if (typeof data.params === 'string') {
+        text = data.params;
+      } else if (data.args) {
+        text = typeof data.args === 'string' ? data.args : JSON.stringify(data.args);
+      }
+      
+      // Parse the text as markdown if possible
+      let parsedText = '';
+      try {
+        parsedText = window.markdownRenderer.parse(text);
+      } catch (e) {
+        console.error('Error parsing markdown:', e);
+        parsedText = `<pre>${text}</pre>`;
+      }
+      
       return html`<typing-indicator agent-name="${data.persona || 'Assistant'}" show-final>
         ${unsafeHTML(parsedText)}
       </typing-indicator>`;
