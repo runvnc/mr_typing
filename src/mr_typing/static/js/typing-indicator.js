@@ -101,7 +101,7 @@ window.registerCommandHandler('say', (data) => {
     
     case 'running':
       // In the running stage, show the text
-      let wait_time = Math.round(Math.random() * 10000 + text.length*1.2);
+      let wait_time = Math.round(Math.random() * 10000 + data.args.text.length*1.2);
       return data.args.text
     
     case 'result':
