@@ -101,8 +101,8 @@ let startTypingPromise = null;
 // Register the command handler for say
 window.registerCommandHandler('say', async (data) => {
   console.log('Handling say command with typing indicator:', data);
-  let min_wait = Math.random() * 4000;
-  let wait_time = Math.round(Math.random() * 25000);
+  let min_wait = Math.random() * 2000;
+  let wait_time = Math.round(Math.random() * 15000);
    
   switch(data.event) {
     case 'partial':
