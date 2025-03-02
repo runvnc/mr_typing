@@ -18,6 +18,8 @@ class TypingIndicator extends BaseEl {
       display: flex;
       align-items: center;
       font-size: 0.9rem;
+      /* italics */
+      font-style: italic;
       color: var(--text-color-secondary, #888);
       margin: 0.5rem 0;
     }
