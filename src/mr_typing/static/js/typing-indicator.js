@@ -108,18 +108,19 @@ window.registerCommandHandler('say', (data) => {
   switch(data.event) {
     case 'partial':
       // For partial updates, just show the typing indicator
+      // This is the stage where text is streaming in
       return html`<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
     
     case 'running':
-      // Still typing
+      // This is the stage where the command is being executed
+      // Still just show the typing indicator
       return html`<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
     
     case 'result':
-      // When we get the final result, show the complete message
-      // Handle different data structures safely
+      // This is the final stage where we show the complete message
+      // Extract the text from the data
       let text = '';
       
-      // Try to extract text from various possible locations
       if (data.params?.text) {
         text = data.params.text;
       } else if (data.params?.markdown) {
@@ -139,6 +140,7 @@ window.registerCommandHandler('say', (data) => {
         parsedText = `<pre>${text}</pre>`;
       }
       
+      // Show the final message with the typing indicator hidden
       return html`<typing-indicator agent-name="${data.persona || 'Assistant'}" show-final>
         ${unsafeHTML(parsedText)}
       </typing-indicator>`;
