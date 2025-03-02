@@ -98,18 +98,16 @@ customElements.define('typing-indicator', TypingIndicator);
 // Register the command handler for say
 window.registerCommandHandler('say', async (data) => {
   console.log('Handling say command with typing indicator:', data);
-  
+  let min_wait = Math.random() * 4000;
+  let wait_time = Math.round(Math.random() * 25000);
+   
   switch(data.event) {
     case 'partial':
-      let min_wait = Math.random() * 2000;
-      let wait_time = Math.round(Math.random() * 5000);
-      await delay(wait_time);
+     await delay(wait_time);
       // For partial updates, just show the typing indicator
       return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
     
     case 'running':
-      let min_wait = Math.random() * 4000;
-      let wait_time = Math.round(Math.random() * 30000 + data.args.text.length*30.2);
       await delay(wait_time);
       return data.args.text
     
