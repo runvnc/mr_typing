@@ -112,7 +112,8 @@ window.registerCommandHandler('say', (data) => {
       }
       
       // No markdown parsing, just show the raw text
-      return `<typing-indicator agent-name="${data.persona || 'Assistant'}" text="${text}"></typing-indicator>`;
+      return text
+      //return `<typing-indicator agent-name="${data.persona || 'Assistant'}" text="${text}"></typing-indicator>`;
     
     case 'result':
       // Don't do anything in the final stage
