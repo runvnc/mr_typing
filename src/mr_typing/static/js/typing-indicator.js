@@ -112,15 +112,20 @@ window.registerCommandHandler('say', async (data) => {
         console.log('%c waiting before showing typing indicator', 'background: blue; color: yellow')
         startTypingPromise = delay(wait_time);
         await startTypingPromise
+        startTypingPromise = null;
         console.log('%c showing typing indicator', 'background: blue; color: yellow"')
         return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
       } else {
         await startTypingPromise;
+        startTypingPromise = null;
         return null;
       }
     
     case 'running':
       isTyping = false
+      if startTypingPromise {
+        await startTypingPromise;
+      }
       await delay(wait_time);
       return data.args.text
     
