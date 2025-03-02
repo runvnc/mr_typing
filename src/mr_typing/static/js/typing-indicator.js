@@ -123,7 +123,7 @@ window.registerCommandHandler('say', async (data) => {
     
     case 'running':
       isTyping = false
-      if startTypingPromise {
+      if (startTypingPromise) {
         await startTypingPromise;
       }
       await delay(wait_time);
