@@ -107,11 +107,11 @@ window.registerCommandHandler('say', async (data) => {
     case 'partial':
      if (!isTyping) {
         isTyping = true;
-       await delay(wait_time);
+        await delay(wait_time);
         return `<typing-indicator agent-name="${data.persona || 'Assistant'}"></typing-indicator>`;
       } else {
         return null;
-      }}
+      }
     
     case 'running':
      isTyping = false
