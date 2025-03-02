@@ -96,7 +96,7 @@ class TypingIndicator extends BaseEl {
 customElements.define('typing-indicator', TypingIndicator);
 
 // Register the command handler for say
-window.registerCommandHandler('say', (data) => {
+window.registerCommandHandler('say', async (data) => {
   console.log('Handling say command with typing indicator:', data);
   
   switch(data.event) {
