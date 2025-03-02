@@ -20,7 +20,7 @@ async def say(text, context=None):
     wait_type = random.randint(0, 10)
     if wait_type < 3:
         wait_time = random.randint(1, 4)
-    else if wait_type < 9:
+    elif wait_type < 9:
         wait_time = random.randint(1, 3)
     else:
         wait_time = random.randint(5, 25)
