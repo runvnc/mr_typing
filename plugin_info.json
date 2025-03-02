@@ -1,0 +1,7 @@
+{
+  "name": "Typing Indicator",
+  "version": "1.0.0",
+  "description": "Shows a typing indicator instead of streaming responses",
+  "services": [],
+  "commands": ["say"]
+}
